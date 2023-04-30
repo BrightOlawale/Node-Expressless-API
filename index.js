@@ -5,8 +5,10 @@ const http = require("http");
 const https = require("https");
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
-const config = require("./config");
+const config = require("./configg");
 const fs = require("fs");
+const handlers = require("./lib/handlers");
+const helpers = require("./lib/helpers");
 
 // Creating instance of the HTTP Server
 const httpServer = http.createServer(function(req, res){
@@ -33,25 +35,6 @@ const httpsServer = https.createServer(httpsServerOptions   , function(req, res)
 httpsServer.listen(config.httpsPort, function(){
     console.log(`Server is currently listening on port ${config.httpsPort} in ${config.env} environment`);
 })
-
-// Define handlers
-const handlers = {};
-
-// Sample handler
-handlers.sample = function(data, callback){
-    callback(206, {'name': 'Sample handler'});
-};
-
-// Not found handler
-handlers.notFound = function(data, callback){
-    callback(404);
-};
-
-// Handle routing
-const router = {
-    "sample": handlers.sample
-};
-
 
 // Define common server logic
 const commonServer = function(req, res){
@@ -89,7 +72,7 @@ const commonServer = function(req, res){
             'query': queryObject,
             'method': method,
             'headers': reqHeaders,
-            'payload': buffer
+            'payload': helpers.jsonToObject(buffer)
         };
 
         // Route request to the selected handler
@@ -116,4 +99,10 @@ const commonServer = function(req, res){
         })
 
     }); // This event will always be called
+};
+
+// Handle routing
+const router = {
+    "ping": handlers.ping,
+    "users": handlers.users
 };
