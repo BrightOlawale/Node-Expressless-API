@@ -2,7 +2,7 @@
 
 // Dependencies
 const server = require('./lib/server');
-const worker = require('./lib/worker');
+const workers = require('./lib/worker');
 
 // App container
 const app = {};
@@ -13,6 +13,7 @@ app.init = function(){
     server.init();
 
     // Start woker
+    workers.init()
 }
 
 app.init();
