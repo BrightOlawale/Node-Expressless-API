@@ -1,4 +1,7 @@
-// Description File for holding template data like Globals
+/*
+ * Description File for holding template data like Globals
+ * 
+ */
 
 const templateData = {
     'templateGlobals': {

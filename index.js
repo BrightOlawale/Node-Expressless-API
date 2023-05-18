@@ -1,4 +1,8 @@
-// Description: Main file for the API
+/*
+ * Description: Main file for the API
+ * 
+ */
+
 
 // Dependencies
 const server = require('./lib/server');
